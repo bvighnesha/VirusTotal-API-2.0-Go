@@ -6,3 +6,7 @@
 [![license](https://img.shields.io/github/license/B-V-R/VirusTotalGo.svg?style=flat-square)]()
 
 Refer https://vighnesh.me/virustotal For Documentation and Examples.
+
+IMPORTANT: Build status is Failed because of packages are not vendored. 
+Using in local machine works without any issues.
+Vendoring will be done as soon as possible.
