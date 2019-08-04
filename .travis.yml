@@ -13,9 +13,6 @@ git:
 
 install: true
 
-ignore:
-  - examples/*
-
 stages:
   - compile
   - test
