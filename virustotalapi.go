@@ -15,6 +15,7 @@ const (
 	URL_FILE_SCAN        string = "https://www.virustotal.com/vtapi/v2/file/scan"
 	URL_FILE_RESCAN      string = "https://www.virustotal.com/vtapi/v2/file/rescan"
 	URL_FILE_UPLOAD      string = "https://www.virustotal.com/vtapi/v2/file/scan/upload_url"
+	URL_FILE_DOWNLOAD    string = "https://www.virustotal.com/vtapi/v2/file/download"
 	URL_FILE_SCAN_REPORT string = "https://www.virustotal.com/vtapi/v2/file/report"
 	URL_URL_SCAN         string = "https://www.virustotal.com/vtapi/v2/url/scan"
 	URL_URL_SCAN_REPORT  string = "http://www.virustotal.com/vtapi/v2/url/report"
@@ -37,6 +38,7 @@ type VirusTotalApi interface {
 	ScanFile(file string) (*json.Response, error)
 	ScanFileStream(filename string, reader io.Reader) (*json.Response, error)
 	FileUploadURL() (string, error)
+	FileDownload(hash string) ([]byte, error)
 	ScanURL(url string) (*json.Response, error)
 	ReScanFile(resource string) (*json.ReScanResponse, error)
 	FileReport(resource string) (*json.Report, error)
@@ -99,6 +101,14 @@ func (virustotal virustotal) FileUploadURL() (string, error) {
 		return "", e
 	}
 	return string(response), e
+}
+
+func (virustotal virustotal) FileDownload(hash string) ([]byte, error) {
+	response, e := http.RequestGet(virustotal.apiKey, URL_FILE_DOWNLOAD, "hash", hash)
+	if e != nil {
+		return nil, e
+	}
+	return response, e
 }
 
 func (virustotal virustotal) ScanURL(url string) (*json.Response, error) {
