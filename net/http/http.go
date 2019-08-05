@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"io/ioutil"
 	"net/http"
+
 	"vighnesh.org/virustotal/net/multipart"
 )
 
@@ -23,7 +24,10 @@ func RequestGet(apikey, url, key, value string) ([]byte, error) {
 	if e == nil {
 		request.Header.Add("User-Agent", multipart.USER_AGENT)
 		query := request.URL.Query()
-		query.Add(key, value)
+		if key != "" && value != "" {
+			query.Add(key, value)
+		}
+
 		query.Add("apikey", apikey)
 		request.URL.RawQuery = query.Encode()
 		return Execute(request)
